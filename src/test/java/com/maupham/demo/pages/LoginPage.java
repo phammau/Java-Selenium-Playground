@@ -15,7 +15,6 @@ public class LoginPage extends BasePage{
     private final By ByLoginbutton  = By.id("login-button");
     private final By ByErrorMessage = By.xpath("//h3[@data-test='error' and contains(text(),'Epic sadface: Username and password do not match any user in this service')]");
 
-
     //action (menthod)//hành động
     public void nhapUsername(String username) {
         inputText(ByUsernameinput, username);
