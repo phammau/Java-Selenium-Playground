@@ -46,7 +46,6 @@ public class InventoryPage extends BasePage {
             productItems.add(productItem);
         }
         return productItems; //trả về danh sách productItems
-
     }
 
     //click vao  gio hang
@@ -69,9 +68,5 @@ public class InventoryPage extends BasePage {
 
     public void sortProductByName_ZToA() {
         selectDropdownOption(bySort, "za");
-    }
-    public void loginAuto_CartPage(){
-        InventoryPage inventoryPage = new InventoryPage(driver);
-        inventoryPage.clickCartIcon();
     }
 }

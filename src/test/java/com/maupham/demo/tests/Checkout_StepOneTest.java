@@ -19,49 +19,49 @@ public class Checkout_StepOneTest extends BaseTest {
    @BeforeMethod
    public void BeforeMethod() {
       driver = setUpDriver();
-      loginCheckoutStepTwo_Auto(driver);
+      loginAndGoToCheckoutStepTwoPage(driver);
    }
     
-    @Test
-    public void testCheckout01() {
-        checkoutStepOnePage = new CheckoutStepOnePage(driver);
-        checkoutStepOnePage.inputFirstName("ABC");
-        checkoutStepOnePage.inputLastName("DFG");
-        checkoutStepOnePage.inputPostalCode("700000");
-        checkoutStepOnePage.clickContinue();
-        checkoutStepTwoPage= new CheckoutStepTwoPage(driver);
-        Assert.assertTrue(checkoutStepTwoPage.isDisplayedOK());
-     }
+   @Test
+   public void testCheckout01() {
+      checkoutStepOnePage = new CheckoutStepOnePage(driver);
+      checkoutStepOnePage.inputFirstName("ABC");
+      checkoutStepOnePage.inputLastName("DFG");
+      checkoutStepOnePage.inputPostalCode("700000");
+      checkoutStepOnePage.clickContinue();
+      checkoutStepTwoPage= new CheckoutStepTwoPage(driver);
+      Assert.assertTrue(checkoutStepTwoPage.isDisplayedOK());
+   }
 
-     @Test
-     public void testCheckout02() {
-         checkoutStepOnePage = new CheckoutStepOnePage(driver);
-         checkoutStepOnePage.inputFirstName("ABC");
-         checkoutStepOnePage.inputLastName("DFG");
-         checkoutStepOnePage.clickContinue();
-         Assert.assertEquals(checkoutStepOnePage.getErrorCheckout(), "Error: Postal Code is required");
-      }
+   @Test
+   public void testCheckout02() {
+      checkoutStepOnePage = new CheckoutStepOnePage(driver);
+      checkoutStepOnePage.inputFirstName("ABC");
+      checkoutStepOnePage.inputLastName("DFG");
+      checkoutStepOnePage.clickContinue();
+      Assert.assertEquals(checkoutStepOnePage.getErrorCheckout(), "Error: Postal Code is required");
+   }
       
-     @Test
-     public void testCheckout03() {
-        checkoutStepOnePage = new CheckoutStepOnePage(driver);
-        checkoutStepOnePage.inputFirstName("ABC");
-        checkoutStepOnePage.inputPostalCode("700000");
-        checkoutStepOnePage.clickContinue();
-        Assert.assertEquals(checkoutStepOnePage.getErrorCheckout(), "Error: Last Name is required");
-      }
+   @Test
+   public void testCheckout03() {
+      checkoutStepOnePage = new CheckoutStepOnePage(driver);
+      checkoutStepOnePage.inputFirstName("ABC");
+      checkoutStepOnePage.inputPostalCode("700000");
+      checkoutStepOnePage.clickContinue();
+      Assert.assertEquals(checkoutStepOnePage.getErrorCheckout(), "Error: Last Name is required");
+   }
       
-     @Test
-     public void testCheckout04() {
-         checkoutStepOnePage = new CheckoutStepOnePage(driver);
-         checkoutStepOnePage.inputLastName("DFG");
-         checkoutStepOnePage.inputPostalCode("700000");
-         checkoutStepOnePage.clickContinue();
-         Assert.assertEquals(checkoutStepOnePage.getErrorCheckout(), "Error: First Name is required");
-      }
-     
-     @AfterMethod
-     public void AfterMethod(){
-        driver.close();
-     }
+   @Test
+   public void testCheckout04() {
+      checkoutStepOnePage = new CheckoutStepOnePage(driver);
+      checkoutStepOnePage.inputLastName("DFG");
+      checkoutStepOnePage.inputPostalCode("700000");
+      checkoutStepOnePage.clickContinue();
+      Assert.assertEquals(checkoutStepOnePage.getErrorCheckout(), "Error: First Name is required");
+   }
+   
+   @AfterMethod
+   public void AfterMethod(){
+      driver.close();
+   }
  }

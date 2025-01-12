@@ -29,7 +29,7 @@ public class InventoryTest extends BaseTest {
     @BeforeMethod 
     public void BeforeMethod() {
         driver = setUpDriver(); // Khởi tạo WebDriver
-        UserLogin(driver); //Đăng nhập vào ứng dụng
+        login(driver); //Đăng nhập vào ứng dụng
         inventoryPage = new InventoryPage(driver); // Khởi tạo đối tượng InventoryPage
     } 
 //->pass
