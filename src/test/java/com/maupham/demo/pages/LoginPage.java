@@ -32,7 +32,7 @@ public class LoginPage extends BasePage{
         return getText(ByErrorMessage);
     }
 
-    public void loginAutoCorect(String username, String password){
+    public void login(String username, String password){
         nhapUsername(username);
         nhapPassword(password);
         clickButtonLogin();

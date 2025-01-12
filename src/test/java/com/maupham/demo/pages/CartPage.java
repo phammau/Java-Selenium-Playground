@@ -8,8 +8,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 public class CartPage extends BasePage {
-    private  CartPage cartPage;
-
     private final By byCartItems = By.className("cart_item");
     private final By byContinueShoppingButton = By.id("continue-shopping");
     private final By byCheckoutButton = By.id("checkout");
@@ -38,10 +36,5 @@ public class CartPage extends BasePage {
 
     public void clickCheckoutButton(){
         clickElement(byCheckoutButton);
-    }
-
-    public void loginAuto_CheckoutPage(){
-        cartPage = new CartPage(driver);
-        cartPage.clickCheckoutButton();
     }
 }

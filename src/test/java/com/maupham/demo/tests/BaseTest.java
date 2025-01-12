@@ -12,8 +12,8 @@ import com.maupham.demo.pages.LoginPage;
 //chuẩn bị và thiết lập môi trường
 public class BaseTest {
     private final String BASE_URL = "https://www.saucedemo.com/";
-    private final String Correct_username = "standard_user";
-    private final String correct_pasword = "secret_sauce";
+    private final String CORRECT_USERNAME = "standard_user";
+    private final String CORRECT_PASSWORD = "secret_sauce";
 
     public BaseTest() { }
 
@@ -28,18 +28,19 @@ public class BaseTest {
         return driver;
     }
 
-    protected void UserLogin(WebDriver driver) { //WebDriver driver phương thức này có thể làm việc với bất kỳ đối tượng WebDriver nào.
+    protected void login(WebDriver driver) { //WebDriver driver phương thức này có thể làm việc với bất kỳ đối tượng WebDriver nào.
         LoginPage loginPage = new LoginPage(driver);
-        loginPage.loginAutoCorect(Correct_username, correct_pasword);
+        loginPage.login(CORRECT_USERNAME, CORRECT_PASSWORD);
     }
 
-    protected void loginCheckoutStepTwo_Auto(WebDriver driver){
-        UserLogin(driver);
+    protected void loginAndGoToCheckoutStepTwoPage(WebDriver driver){
+        login(driver);
+
         InventoryPage inventoryPage = new InventoryPage(driver);
-        inventoryPage.loginAuto_CartPage();
+        inventoryPage.clickCartIcon();
+
         CartPage cartPage = new CartPage(driver);
-        cartPage.loginAuto_CheckoutPage();
-       // CheckoutStepOnePage checkoutStepOnePage = new CheckoutStepOnePage(driver);
+        cartPage.clickCheckoutButton();
     }
 
 }
