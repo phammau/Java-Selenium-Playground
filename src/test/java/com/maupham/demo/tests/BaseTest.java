@@ -6,6 +6,7 @@ import org.openqa.selenium.WebDriver;
 
 import com.maupham.demo.helpers.Driverhelper;
 import com.maupham.demo.pages.CartPage;
+import com.maupham.demo.pages.CheckoutStepOnePage;
 import com.maupham.demo.pages.InventoryPage;
 import com.maupham.demo.pages.LoginPage;
 
@@ -14,6 +15,9 @@ public class BaseTest {
     private final String BASE_URL = "https://www.saucedemo.com/";
     private final String CORRECT_USERNAME = "standard_user";
     private final String CORRECT_PASSWORD = "secret_sauce";
+    private final String INPUTFIRSTNAME = "ABC";
+    private final String INPUTLASTNAME = "DFG";
+    private final String INPUTPOSTALCODE = "12345e";
 
     public BaseTest() { }
 
@@ -33,7 +37,7 @@ public class BaseTest {
         loginPage.login(CORRECT_USERNAME, CORRECT_PASSWORD);
     }
 
-    protected void loginAndGoToCheckoutStepTwoPage(WebDriver driver){
+    protected void loginAndGoToCheckoutStepOnePage(WebDriver driver){
         login(driver);
 
         InventoryPage inventoryPage = new InventoryPage(driver);
@@ -42,5 +46,19 @@ public class BaseTest {
         CartPage cartPage = new CartPage(driver);
         cartPage.clickCheckoutButton();
     }
+
+    protected void loginAndGoToCheckoutStepTwoPage(WebDriver driver){
+        InventoryPage inventoryPage = new InventoryPage(driver);
+        inventoryPage.clickCartIcon();
+
+        CartPage cartPage = new CartPage(driver);
+        cartPage.clickCheckoutButton();
+
+       CheckoutStepOnePage checkoutStepOnePage = new CheckoutStepOnePage(driver);
+       checkoutStepOnePage.loginAutoCheckoutStepTwo(INPUTFIRSTNAME, INPUTLASTNAME, INPUTLASTNAME);
+       
+       checkoutStepOnePage.clickContinue();
+    }
+
 
 }

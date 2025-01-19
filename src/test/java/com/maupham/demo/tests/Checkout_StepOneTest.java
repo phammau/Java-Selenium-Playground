@@ -19,7 +19,7 @@ public class Checkout_StepOneTest extends BaseTest {
    @BeforeMethod
    public void BeforeMethod() {
       driver = setUpDriver();
-      loginAndGoToCheckoutStepTwoPage(driver);
+      loginAndGoToCheckoutStepOnePage(driver);
    }
     
    @Test
@@ -27,7 +27,7 @@ public class Checkout_StepOneTest extends BaseTest {
       checkoutStepOnePage = new CheckoutStepOnePage(driver);
       checkoutStepOnePage.inputFirstName("ABC");
       checkoutStepOnePage.inputLastName("DFG");
-      checkoutStepOnePage.inputPostalCode("700000");
+      checkoutStepOnePage.inputPostalCode("12345e");
       checkoutStepOnePage.clickContinue();
       checkoutStepTwoPage= new CheckoutStepTwoPage(driver);
       Assert.assertTrue(checkoutStepTwoPage.isDisplayedOK());
@@ -46,7 +46,7 @@ public class Checkout_StepOneTest extends BaseTest {
    public void testCheckout03() {
       checkoutStepOnePage = new CheckoutStepOnePage(driver);
       checkoutStepOnePage.inputFirstName("ABC");
-      checkoutStepOnePage.inputPostalCode("700000");
+      checkoutStepOnePage.inputPostalCode("12345e");
       checkoutStepOnePage.clickContinue();
       Assert.assertEquals(checkoutStepOnePage.getErrorCheckout(), "Error: Last Name is required");
    }
@@ -55,7 +55,7 @@ public class Checkout_StepOneTest extends BaseTest {
    public void testCheckout04() {
       checkoutStepOnePage = new CheckoutStepOnePage(driver);
       checkoutStepOnePage.inputLastName("DFG");
-      checkoutStepOnePage.inputPostalCode("700000");
+      checkoutStepOnePage.inputPostalCode("12345e");
       checkoutStepOnePage.clickContinue();
       Assert.assertEquals(checkoutStepOnePage.getErrorCheckout(), "Error: First Name is required");
    }

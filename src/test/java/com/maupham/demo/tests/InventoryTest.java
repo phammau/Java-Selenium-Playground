@@ -131,11 +131,11 @@ public class InventoryTest extends BaseTest {
        
         inventoryPage.sortProductByPrice_HightToLow(); //sắp xếp sản phẩm theo giá từ thấp đến cao.
         List<Double> actual = productItems.stream().map(ProductItem::getPrice).toList(); // Lấy danh sách giá sau khi thực sắp xếp
-        System.out.println(actual);
+       
         Assert.assertFalse(expected.equals(actual)); //Kiểm tra danh sách ban đầu và sau khi sắp xếp có khác nhau không(phai đảm bảo khác nhau)
-        System.out.println(expected);
+      
         Collections.sort(expected,Comparator.reverseOrder()); //Sắp xếp danh sách mong đợi (expected) để làm chuẩn                                                               
-        System.out.println(expected);
+        
         Assert.assertTrue(expected.equals(actual));
     }
     

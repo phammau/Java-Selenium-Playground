@@ -9,7 +9,7 @@ public class CheckoutStepOnePage extends CartPage {
     private final By byZipPostalCode = By.id("postal-code");
     private final By byErrorCheckout = By.xpath("//div[@class ='error-message-container error']");
     private final By byTitleCheckout = By.xpath("//span[@class= 'title'][@data-test = 'title']");
-    private final By byConTinue = By.id("continue");
+    private final By byConTinue = By.xpath("//input[@type='submit']");
     
     public CheckoutStepOnePage(WebDriver driver) {
         super(driver);
@@ -39,10 +39,10 @@ public class CheckoutStepOnePage extends CartPage {
         clickElement(byConTinue);
     }
     
-    public void loginAutoCorect_CheckoutStep(String firstname, String lasttname, String postalname) {
-        inputFirstName("ABC");
-        inputLastName("DFG");
-        inputPostalCode("postalCode");
+    public void loginAutoCheckoutStepTwo(String firstname, String lasttname, String postalcode) {
+        inputFirstName(firstname);
+        inputLastName(lasttname);
+        inputPostalCode(postalcode);
         clickContinue();
     }
 }

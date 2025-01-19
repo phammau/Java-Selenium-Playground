@@ -10,7 +10,8 @@ import org.openqa.selenium.WebElement;
 public class CartPage extends BasePage {
     private final By byCartItems = By.className("cart_item");
     private final By byContinueShoppingButton = By.id("continue-shopping");
-    private final By byCheckoutButton = By.id("checkout");
+    private final By byCheckoutButton = By.xpath("//button[@data-test='checkout']");
+    private final By byCart = By.xpath("//span[@data-test='shopping-cart-badge']");
     
     public CartPage(WebDriver driver) {
         super(driver);
@@ -34,7 +35,15 @@ public class CartPage extends BasePage {
         clickElement(byContinueShoppingButton);
     }
 
-    public void clickCheckoutButton(){
+    public void clickCheckoutButton() {
         clickElement(byCheckoutButton);
+    }
+
+    public int getCartCount() {
+        String count = getElement(byCart).getText();
+        if ("".equals(count)) {
+            return  0;
+        }
+        return Integer.parseInt(count);
     }
 }

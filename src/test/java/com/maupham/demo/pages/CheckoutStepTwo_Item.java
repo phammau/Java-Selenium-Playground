@@ -7,15 +7,13 @@ public class CheckoutStepTwo_Item extends CheckoutStepTwoPage {
     private final  By byName;
     private final  By byPrice;
     private final  By byDescription;
-    private final  By byFinishButton;
 
     public CheckoutStepTwo_Item(WebDriver driver, int index) {
         super(driver);
         index++;
-        byName = By.xpath("//div[@class='inventory_item_name']");
-        byPrice = By.xpath("//div[@class='inventory_item_price']");
-        byDescription = By.xpath("//div[@class='inventory_item_desc']");
-        byFinishButton = By.id("finish");
+        byName = By.xpath("//div[@class='cart_item']["+index+"]//div[@data-test='inventory-item-name']");
+        byPrice = By.xpath("//div[@class='cart_item']["+index+"]//div[@data-test='inventory-item-price']");
+        byDescription = By.xpath("//div[@class='cart_item']["+index+"]//div[@data-test='inventory-item-desc']");
     }
     
     public String getName() {
@@ -30,9 +28,4 @@ public class CheckoutStepTwo_Item extends CheckoutStepTwoPage {
     public String getDescription() {
         return getText(byDescription);
     }
-
-    public void clickFinishButton(){
-        clickElement(byFinishButton);
-    }
-
 }
