@@ -8,10 +8,10 @@ public class Driverhelper {
     
     public static WebDriver getDriver() {
 
-        String path = System.getProperty("user.dir"); //Lấy đường dẫn thư mục hiện tại
+        String path = System.getProperty("user.dir"); //Lấy đường dẫn thư mục lam viec hiện tại
         ChromeOptions options =  new ChromeOptions(); //Tạo đối tượng ChromeOptions ,khởi tạo cho trình duyệt Chrome.
         //this line for windows
-        System.setProperty("webdriver.chrome.driver",path+"/drivers/chromedriver.exe");  //Đặt thuộc tính hệ thống cho ChromeDriver
+        System.setProperty("webdriver.chrome.driver", path+ "/drivers/chromedriver.exe");  //Đặt thuộc tính hệ thống cho ChromeDriver
         return new ChromeDriver(options);  //Khởi tạo và trả về ChromeDriver
     }
 }

@@ -55,7 +55,7 @@ public class InventoryTest extends BaseTest {
     }
 
     @Test
-    public void test_ClickProductItem(){
+    public void test_ClickProductItem() {
          List<ProductItem> productItems = inventoryPage.getProductItems();
        
         for (ProductItem productItem : productItems) {
@@ -82,7 +82,7 @@ public class InventoryTest extends BaseTest {
     }
 
     @Test
-    public void test_ClickAddtocartdBtn_CartItem(){
+    public void test_ClickAddtocartdBtn_CartItem() {
         List<ProductItem> productItems = inventoryPage.getProductItems();  //Lấy danh sách các sản phẩm từ trang inventoryPage thông qua phương thức getProductItems().
         for (int i = 0; i < productItems.size(); i++) {
             ProductItem productItem = productItems.get(i);
@@ -110,8 +110,8 @@ public class InventoryTest extends BaseTest {
     }
 
     @Test
-    public void testSortProductsByPriceLowToHigh(){
-        List<ProductItem> productItems = inventoryPage.getProductItems(); //lấy danh sách
+    public void testSortProductsByPriceLowToHigh() {
+        List<ProductItem> productItems = inventoryPage.getProductItems(); //lấy danh sách sp ban đầu
         
         List<Double> expected = new ArrayList<>(productItems.stream().map(ProductItem::getPrice).toList()); // Tạo danh sách expected chứa giá của sản phẩm ban dau,ánh xạ (map) từng sản phẩm sang giá của nó,chuyển kết quả stream thành danh sách (tolist).
 
@@ -125,10 +125,10 @@ public class InventoryTest extends BaseTest {
     }
 
     @Test
-    public void testSortProductsByPriceHighToLow(){
+    public void testSortProductsByPriceHighToLow() {
         List<ProductItem> productItems = inventoryPage.getProductItems(); 
         List<Double> expected = new ArrayList<>(productItems.stream().map(ProductItem::getPrice).toList()); // Tạo danh sách expected chứa giá của sản phẩm ban dau,ánh xạ (map) từng sản phẩm sang giá của nó,chuyển kết quả stream thành danh sách (tolist).
-       
+
         inventoryPage.sortProductByPrice_HightToLow(); //sắp xếp sản phẩm theo giá từ thấp đến cao.
         List<Double> actual = productItems.stream().map(ProductItem::getPrice).toList(); // Lấy danh sách giá sau khi thực sắp xếp
        
@@ -140,7 +140,7 @@ public class InventoryTest extends BaseTest {
     }
     
     @Test
-    public void testSortProductsByNameAtoZ(){
+    public void testSortProductsByNameAtoZ() {
         List<ProductItem> productItems = inventoryPage.getProductItems();
         List<String> expected = new ArrayList<>(productItems.stream().map(ProductItem::getName).toList()); 
 
@@ -152,7 +152,6 @@ public class InventoryTest extends BaseTest {
         Collections.sort(expected, Comparator.reverseOrder());  //sap xếp giảm trong Collections                                                              
         Assert.assertTrue(expected.equals(actual));
     }
-
 
     @AfterMethod
     public  void AfterMethod() {

@@ -11,19 +11,19 @@ import org.testng.annotations.Test;
 
 import com.maupham.demo.pages.CartPage;
 import com.maupham.demo.pages.CheckoutStepOnePage;
+import com.maupham.demo.pages.CheckoutStepTwoItem;
 import com.maupham.demo.pages.CheckoutStepTwoPage;
-import com.maupham.demo.pages.CheckoutStepTwo_Item;
 import com.maupham.demo.pages.InventoryPage;
 import com.maupham.demo.pages.ProductItem;
 
-public class Checkout_StepTwoTest extends BaseTest {
+public class CheckoutStepTwoTest extends BaseTest {
     private WebDriver driver;
     private CartPage cartPage;
     private CheckoutStepOnePage checkoutStepOnePage;
     private CheckoutStepTwoPage checkoutStepTwoPage;
     private InventoryPage inventoryPage;
     
-    public Checkout_StepTwoTest () {}
+    public CheckoutStepTwoTest() {}
 
     @BeforeMethod
     public void BeforeMethod(){
@@ -38,6 +38,7 @@ public class Checkout_StepTwoTest extends BaseTest {
         for (ProductItem productItem : productItems) {
             productItem.clickAddToCartButton();
         }
+
         inventoryPage = new InventoryPage(driver);
         inventoryPage.clickCartIcon();
 
@@ -45,7 +46,7 @@ public class Checkout_StepTwoTest extends BaseTest {
         cartPage.clickCheckoutButton();
 
         checkoutStepOnePage= new CheckoutStepOnePage(driver);
-        checkoutStepOnePage.loginAutoCheckoutStepTwo("ABC", "DFG", "123456E");
+        checkoutStepOnePage.autoFillAndProceedToStepTwo("ABC", "DFG", "123456E");
 
         checkoutStepTwoPage = new CheckoutStepTwoPage(driver);
         Assert.assertEquals(cartPage.getCartCount(), checkoutStepTwoPage.getCartCount());
@@ -70,16 +71,16 @@ public class Checkout_StepTwoTest extends BaseTest {
         cartPage.clickCheckoutButton();
 
         checkoutStepOnePage = new CheckoutStepOnePage(driver);
-        checkoutStepOnePage.loginAutoCheckoutStepTwo("ABC", "DFG", "123456E");
+        checkoutStepOnePage.autoFillAndProceedToStepTwo("ABC", "DFG", "123456E");
         checkoutStepTwoPage = new CheckoutStepTwoPage(driver);
 
         for (int i = 0; i < productItems.size(); i++) {
-            List<CheckoutStepTwo_Item> checkoutStepTwo_Items = checkoutStepTwoPage.getCheckoutStepTwo_Items();
-            CheckoutStepTwo_Item checkoutStepTwo_Item = checkoutStepTwo_Items.get(i);
+            List<CheckoutStepTwoItem> checkoutStepTwoItems = checkoutStepTwoPage.getCheckoutStepTwoItems();
+            CheckoutStepTwoItem checkoutStepTwoItem = checkoutStepTwoItems.get(i);
 
-            String actualName = checkoutStepTwo_Item.getName();
-            Double actualPrice = checkoutStepTwo_Item.getPrice();
-            String actualDescription = checkoutStepTwo_Item.getDescription();
+            String actualName = checkoutStepTwoItem.getName();
+            Double actualPrice = checkoutStepTwoItem.getPrice();
+            String actualDescription = checkoutStepTwoItem.getDescription();
 
             Assert.assertEquals(expectedNames.get(i), actualName);
             System.out.println(expectedNames.get(i)+","+actualName);
@@ -103,14 +104,14 @@ public class Checkout_StepTwoTest extends BaseTest {
         cartPage.clickCheckoutButton();
 
         checkoutStepOnePage= new CheckoutStepOnePage(driver);
-        checkoutStepOnePage.loginAutoCheckoutStepTwo("ABC", "DFG", "123456E");
+        checkoutStepOnePage.autoFillAndProceedToStepTwo("ABC", "DFG", "123456E");
 
         checkoutStepTwoPage = new CheckoutStepTwoPage(driver);
 
-        List<CheckoutStepTwo_Item> checkoutStepTwo_Items = checkoutStepTwoPage.getCheckoutStepTwo_Items();
+        List<CheckoutStepTwoItem> checkoutStepTwo_Items = checkoutStepTwoPage.getCheckoutStepTwoItems();
         double count = 0;
         
-        for (CheckoutStepTwo_Item checkoutStepTwo_Item : checkoutStepTwo_Items) {
+        for (CheckoutStepTwoItem checkoutStepTwo_Item : checkoutStepTwo_Items) {
             count += checkoutStepTwo_Item.getPrice();
         }
         System.out.println(count);
@@ -125,6 +126,4 @@ public class Checkout_StepTwoTest extends BaseTest {
     public void AfterMethod() {
         driver.close();
     }
-
-
 }

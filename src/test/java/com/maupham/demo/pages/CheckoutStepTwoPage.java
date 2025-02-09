@@ -31,15 +31,15 @@ public class CheckoutStepTwoPage extends CartPage {
         return Integer.parseInt(count);
     }
 
-    public List<CheckoutStepTwo_Item> getCheckoutStepTwo_Items() {
+    public List<CheckoutStepTwoItem> getCheckoutStepTwoItems() {
         List<WebElement> elements = getElements(byCartItems);
         if(elements.isEmpty()) {
             return new ArrayList<>();
         }
-        List<CheckoutStepTwo_Item> checkoutStepTwo_Items = new ArrayList<>();
+        List<CheckoutStepTwoItem> checkoutStepTwo_Items = new ArrayList<>();
         for (int i = 0; i < elements.size(); i++) {
-            CheckoutStepTwo_Item checkoutStepTwo_Item = new CheckoutStepTwo_Item(driver, i);
-            checkoutStepTwo_Items.add(checkoutStepTwo_Item);
+            CheckoutStepTwoItem checkoutStepTwoItem = new CheckoutStepTwoItem(driver, i);
+            checkoutStepTwo_Items.add(checkoutStepTwoItem);
         }
         return checkoutStepTwo_Items;
     }

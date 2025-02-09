@@ -11,7 +11,7 @@ public class BasePage {
    protected WebDriver driver;
    protected WebElement element;
 
-    public BasePage(WebDriver driver){
+    public BasePage(WebDriver driver) {
         this.driver = driver;
     }
 
@@ -32,8 +32,7 @@ public class BasePage {
     }
 
     public void inputText(By by,String text) {
-        getElement(by).sendKeys(text);
-        // System.out.println("Input success");
+        getElement(by).sendKeys(text); //Dùng để nhập dữ liệu vào các trường nhập liệu
     }
 
     public void clickElement(By by) {

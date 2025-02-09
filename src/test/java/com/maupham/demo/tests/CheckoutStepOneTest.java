@@ -9,12 +9,12 @@ import org.testng.annotations.Test;
 import com.maupham.demo.pages.CheckoutStepOnePage;
 import com.maupham.demo.pages.CheckoutStepTwoPage;
 
-public class Checkout_StepOneTest extends BaseTest {
+public class CheckoutStepOneTest extends BaseTest {
    private CheckoutStepOnePage checkoutStepOnePage;
    private CheckoutStepTwoPage checkoutStepTwoPage;
    private WebDriver driver;
 
-   public Checkout_StepOneTest() {}
+   public CheckoutStepOneTest() {}
 
    @BeforeMethod
    public void BeforeMethod() {

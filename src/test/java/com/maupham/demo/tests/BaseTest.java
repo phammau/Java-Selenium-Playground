@@ -48,6 +48,7 @@ public class BaseTest {
     }
 
     protected void loginAndGoToCheckoutStepTwoPage(WebDriver driver){
+        login(driver);
         InventoryPage inventoryPage = new InventoryPage(driver);
         inventoryPage.clickCartIcon();
 
@@ -55,10 +56,6 @@ public class BaseTest {
         cartPage.clickCheckoutButton();
 
        CheckoutStepOnePage checkoutStepOnePage = new CheckoutStepOnePage(driver);
-       checkoutStepOnePage.loginAutoCheckoutStepTwo(INPUTFIRSTNAME, INPUTLASTNAME, INPUTLASTNAME);
-       
-       checkoutStepOnePage.clickContinue();
+       checkoutStepOnePage.autoFillAndProceedToStepTwo(INPUTFIRSTNAME, INPUTLASTNAME, INPUTLASTNAME);
     }
-
-
 }

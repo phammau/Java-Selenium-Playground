@@ -41,9 +41,10 @@ public class CartPage extends BasePage {
 
     public int getCartCount() {
         String count = getElement(byCart).getText();
-        if ("".equals(count)) {
-            return  0;
+        if (count.isEmpty()) {
+            return 0;
         }
         return Integer.parseInt(count);
     }
 }
+
