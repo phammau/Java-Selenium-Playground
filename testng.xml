@@ -1,0 +1,9 @@
+<suite name="ParallelTests" parallel="methods" thread-count="5">
+    <test name="Test1">
+        <classes>
+            <class name="com.maupham.demo.tests.LoginTest"/>
+            <class name="com.maupham.demo.tests.InventoryTest"/>
+           <!-- <class name="com.maupham.demo.tests.CartTest"/> -->
+        </classes>
+    </test>
+</suite>

@@ -28,7 +28,7 @@ public class CheckoutStepTwoTest extends BaseTest {
     @BeforeMethod
     public void BeforeMethod(){
         driver = setUpDriver();
-        login(driver);
+        login();
         inventoryPage= new InventoryPage(driver);
     }
 

@@ -1,17 +1,30 @@
 package com.maupham.demo.helpers;
 
+import java.io.File;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
 
-public class Driverhelper {
-    
-    public static WebDriver getDriver() {
+import io.github.bonigarcia.wdm.WebDriverManager;
 
-        String path = System.getProperty("user.dir"); //Lấy đường dẫn thư mục lam viec hiện tại
-        ChromeOptions options =  new ChromeOptions(); //Tạo đối tượng ChromeOptions ,khởi tạo cho trình duyệt Chrome.
-        //this line for windows
-        System.setProperty("webdriver.chrome.driver", path+ "/drivers/chromedriver.exe");  //Đặt thuộc tính hệ thống cho ChromeDriver
-        return new ChromeDriver(options);  //Khởi tạo và trả về ChromeDriver
+public class DriverHelper {
+    
+    public static WebDriver getDriver(boolean headless) {
+        WebDriverManager.chromedriver().setup();
+        
+        var path = System.getProperty("user.dir");
+        var options = new ChromeOptions();
+
+        if (headless) {
+            options.addArguments("--headless");
+        }
+        var logFile = new File(path + "/chromedriver.log");
+        var service = new ChromeDriverService.Builder()
+            .withVerbose(true)
+            .withLogFile(logFile)
+            .build();
+        return new ChromeDriver(service, options);  
     }
 }
