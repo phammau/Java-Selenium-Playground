@@ -1,9 +1,7 @@
 package com.maupham.demo.tests;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -17,47 +15,47 @@ import com.maupham.demo.pages.InventoryPage;
 import com.maupham.demo.pages.ProductItem;
 
 public class CheckoutStepTwoTest extends BaseTest {
-    private WebDriver driver;
-    private CartPage cartPage;
-    private CheckoutStepOnePage checkoutStepOnePage;
-    private CheckoutStepTwoPage checkoutStepTwoPage;
-    private InventoryPage inventoryPage;
-    
-    public CheckoutStepTwoTest() {}
+    private final ThreadLocal<CartPage> _cartPage = new ThreadLocal<>();
+    private final ThreadLocal<CheckoutStepTwoPage> _checkoutStepTwoPage = new ThreadLocal<>();
+    private final ThreadLocal<InventoryPage> _inventoryPage = new ThreadLocal<>();
+    private final ThreadLocal<CheckoutStepOnePage> _checkoutStepOnePage = new ThreadLocal<>();
 
     @BeforeMethod
-    public void BeforeMethod(){
-        driver = setUpDriver();
+    public void beforeMethod(){
         login();
-        inventoryPage= new InventoryPage(driver);
+        _inventoryPage.set(new InventoryPage(getDriver()));
     }
 
     @Test
     public void testCheckoutTwo01(){
-        List<ProductItem> productItems = inventoryPage.getProductItems();
+        var inventoryPage = _inventoryPage.get();
+        var productItems = inventoryPage.getProductItems();
+
         for (ProductItem productItem : productItems) {
             productItem.clickAddToCartButton();
         }
 
-        inventoryPage = new InventoryPage(driver);
-        inventoryPage.clickCartIcon();
+        _inventoryPage.set(new InventoryPage(getDriver()));
+        _inventoryPage.get().clickCartIcon();
 
-        cartPage= new CartPage(driver);
-        cartPage.clickCheckoutButton();
+        _cartPage.set(new CartPage(getDriver()));
+        _cartPage.get().clickCheckoutButton();
 
-        checkoutStepOnePage= new CheckoutStepOnePage(driver);
-        checkoutStepOnePage.autoFillAndProceedToStepTwo("ABC", "DFG", "123456E");
+        _checkoutStepOnePage.set(new CheckoutStepOnePage(getDriver()));
+        _checkoutStepOnePage.get().autoFillAndProceedToStepTwo("ABC", "DFG", "123456E");
 
-        checkoutStepTwoPage = new CheckoutStepTwoPage(driver);
-        Assert.assertEquals(cartPage.getCartCount(), checkoutStepTwoPage.getCartCount());
+        _checkoutStepTwoPage.set(new CheckoutStepTwoPage(getDriver()));
+        Assert.assertEquals(_cartPage.get().getCartCount(),  _checkoutStepTwoPage.get().getCartCount());
     }
 
     @Test
     public  void testCheckoutTwo02() {
-        List<ProductItem> productItems = inventoryPage.getProductItems();
-        List<String> expectedNames = new ArrayList<>();
-        List<Double> expectedPrices = new ArrayList<>();
-        List<String> expectedDescriptions = new ArrayList<>();
+        var inventoryPage = _inventoryPage.get();
+        var productItems = inventoryPage.getProductItems();
+
+        var expectedNames = new ArrayList<String>();
+        var expectedPrices = new ArrayList<Double>();
+        var expectedDescriptions = new ArrayList<String>();
 
         for (ProductItem productItem : productItems) {
             expectedNames.add(productItem.getName());
@@ -65,17 +63,18 @@ public class CheckoutStepTwoTest extends BaseTest {
             expectedDescriptions.add(productItem.getDescription());
             productItem.clickAddToCartButton();
         }
-        inventoryPage.clickCartIcon();
+        _inventoryPage.get().clickCartIcon();
 
-        cartPage =  new CartPage(driver);
-        cartPage.clickCheckoutButton();
+        _cartPage.set(new CartPage(getDriver()));
+        _cartPage.get().clickCheckoutButton();
 
-        checkoutStepOnePage = new CheckoutStepOnePage(driver);
-        checkoutStepOnePage.autoFillAndProceedToStepTwo("ABC", "DFG", "123456E");
-        checkoutStepTwoPage = new CheckoutStepTwoPage(driver);
+        _checkoutStepOnePage.set(new CheckoutStepOnePage(getDriver()));
+        _checkoutStepOnePage.get().autoFillAndProceedToStepTwo("ABC", "DFG", "123456E");
+        _checkoutStepTwoPage.set(new CheckoutStepTwoPage(getDriver()));
 
         for (int i = 0; i < productItems.size(); i++) {
-            List<CheckoutStepTwoItem> checkoutStepTwoItems = checkoutStepTwoPage.getCheckoutStepTwoItems();
+            var checkoutStepTwoPage = _checkoutStepTwoPage.get();
+            var checkoutStepTwoItems = checkoutStepTwoPage.getCheckoutStepTwoItems();
             CheckoutStepTwoItem checkoutStepTwoItem = checkoutStepTwoItems.get(i);
 
             String actualName = checkoutStepTwoItem.getName();
@@ -92,38 +91,38 @@ public class CheckoutStepTwoTest extends BaseTest {
 
     @Test
     public void testPriceTotals() {
-        List <ProductItem> productItems = inventoryPage.getProductItems();
+        var inventoryPage = _inventoryPage.get();
+        var productItems = inventoryPage.getProductItems();
         for (ProductItem productItem : productItems) {
             productItem.clickAddToCartButton();
         }
         
-        inventoryPage = new InventoryPage(driver);
-        inventoryPage.clickCartIcon();
+        _inventoryPage.set(new InventoryPage(getDriver()));
+        _inventoryPage.get().clickCartIcon();
 
-        cartPage= new CartPage(driver);
-        cartPage.clickCheckoutButton();
+        _cartPage.set(new CartPage(getDriver()));
+        _cartPage.get().clickCheckoutButton();
 
-        checkoutStepOnePage= new CheckoutStepOnePage(driver);
-        checkoutStepOnePage.autoFillAndProceedToStepTwo("ABC", "DFG", "123456E");
+        _checkoutStepOnePage.set(new CheckoutStepOnePage(getDriver()));
+        _checkoutStepOnePage.get().autoFillAndProceedToStepTwo("ABC", "DFG", "123456E");
 
-        checkoutStepTwoPage = new CheckoutStepTwoPage(driver);
+        _checkoutStepTwoPage.set(new CheckoutStepTwoPage(getDriver()));
 
-        List<CheckoutStepTwoItem> checkoutStepTwo_Items = checkoutStepTwoPage.getCheckoutStepTwoItems();
-        double count = 0;
+        var checkoutStepTwoPage = _checkoutStepTwoPage.get();
+        var checkoutStepTwoItems = checkoutStepTwoPage.getCheckoutStepTwoItems();
+        var count = 0.0;
         
-        for (CheckoutStepTwoItem checkoutStepTwo_Item : checkoutStepTwo_Items) {
-            count += checkoutStepTwo_Item.getPrice();
+        for (CheckoutStepTwoItem checkoutStepTwoItem : checkoutStepTwoItems) {
+            count += checkoutStepTwoItem.getPrice();
         }
-        System.out.println(count);
-        double priceTotals = count;
-
-        System.out.println(checkoutStepTwoPage.getPriceTotals());
-
-        Assert.assertEquals(checkoutStepTwoPage.getPriceTotals(),priceTotals);
+        var priceTotals = count;
+        Assert.assertEquals( _checkoutStepTwoPage.get().getPriceTotals(),priceTotals);
     }
 
     @AfterMethod
-    public void AfterMethod() {
-        driver.close();
+    public void afterMethod() {
+       _cartPage.remove();
+       _checkoutStepTwoPage.remove();
+       _inventoryPage.remove();
     }
 }

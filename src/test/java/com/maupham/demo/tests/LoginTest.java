@@ -17,7 +17,7 @@ public class LoginTest extends BaseTest{
     }
 
     @Test
-    public void Test_01() {
+    public void Test01() {
         var loginPage = _loginPage.get();
         loginPage.nhapUsername("standard_user");
         loginPage.nhapPassword("secret_sauce");
@@ -27,7 +27,7 @@ public class LoginTest extends BaseTest{
     }
 
     @Test
-    public void Test_02() {
+    public void Test02() {
         var loginPage = _loginPage.get();
         loginPage.nhapUsername("standard_user1");
         loginPage.nhapPassword("secret_sauce");
@@ -36,7 +36,7 @@ public class LoginTest extends BaseTest{
     }
     
     @Test
-    public void Test_03() {
+    public void Test03() {
         var loginPage = _loginPage.get();
         loginPage.nhapUsername("standard_user");
         loginPage.nhapPassword("secret_sauce1");
@@ -45,7 +45,7 @@ public class LoginTest extends BaseTest{
     }
      
     @Test
-    public void Test_04() {
+    public void Test04() {
         var loginPage = _loginPage.get();
         loginPage.nhapUsername("standard_user1");
         loginPage.nhapPassword("secret_sauce1");

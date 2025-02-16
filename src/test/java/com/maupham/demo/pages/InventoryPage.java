@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 
 public class InventoryPage extends BasePage {
     public InventoryPage(WebDriver driver) {
@@ -24,7 +23,7 @@ public class InventoryPage extends BasePage {
 
     //kt va tra ve sô luong sp trong gio hang
     public int getCartCount() {
-        String count = getElement(bycart).getText(); //lay van ban cua phan tu
+        var count = getElement(bycart).getText(); //lay van ban cua phan tu
         if("".equals(count)){ //kt xem có rông ko
             return 0; //neu rong tra ve 0
         }
@@ -33,12 +32,13 @@ public class InventoryPage extends BasePage {
 
     // Lấy danh sách các đối tượng ProductItem
     public List<ProductItem> getProductItems() {
-        List<WebElement> elements = getElements(byProductItems); //tìm kiếm tất cả các phần tử(list) web phù hợp với tiêu chí byproductItem và lưu trữ chúng trong danh sách elements
+        var elements = getElements(byProductItems); //tìm kiếm tất cả các phần tử(list) web phù hợp với tiêu chí byproductItem và lưu trữ chúng trong danh sách elements
+       
         if(elements.isEmpty()) { //Nếu danh sách elements rỗng, trả về một danh sách trống
             return  new ArrayList<>();
         }
         
-        List<ProductItem> productItems = new ArrayList<>(); //khởi tạo một danh sách rong chứa các đối tượng ProductItem
+        var productItems = new ArrayList<ProductItem>(); //khởi tạo một danh sách rong chứa các đối tượng ProductItem(chỉ rõ tham số)
        
         // Duyệt qua từng phần tử trong danh sách elements và tạo đối tượng ProductItem  mới tương ứng
         for (int i = 0; i <elements.size(); i++) {

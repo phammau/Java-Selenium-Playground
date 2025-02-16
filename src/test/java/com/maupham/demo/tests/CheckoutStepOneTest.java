@@ -1,6 +1,5 @@
 package com.maupham.demo.tests;
 
-import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -10,58 +9,55 @@ import com.maupham.demo.pages.CheckoutStepOnePage;
 import com.maupham.demo.pages.CheckoutStepTwoPage;
 
 public class CheckoutStepOneTest extends BaseTest {
-   private CheckoutStepOnePage checkoutStepOnePage;
-   private CheckoutStepTwoPage checkoutStepTwoPage;
-   private WebDriver driver;
-
-   public CheckoutStepOneTest() {}
+   private final ThreadLocal<CheckoutStepOnePage> _checkoutStepOnePage = new ThreadLocal<>();
+   private final ThreadLocal<CheckoutStepTwoPage> _checkoutStepTwoPage = new ThreadLocal<>();
 
    @BeforeMethod
    public void BeforeMethod() {
-      driver = setUpDriver();
-      loginAndGoToCheckoutStepOnePage(driver);
+      loginAndGoToCheckoutStepOnePage();
    }
     
    @Test
    public void testCheckout01() {
-      checkoutStepOnePage = new CheckoutStepOnePage(driver);
-      checkoutStepOnePage.inputFirstName("ABC");
-      checkoutStepOnePage.inputLastName("DFG");
-      checkoutStepOnePage.inputPostalCode("12345e");
-      checkoutStepOnePage.clickContinue();
-      checkoutStepTwoPage= new CheckoutStepTwoPage(driver);
-      Assert.assertTrue(checkoutStepTwoPage.isDisplayedOK());
+      _checkoutStepOnePage.set(new CheckoutStepOnePage(getDriver()));
+      _checkoutStepOnePage.get().inputFirstName("ABC");
+      _checkoutStepOnePage.get().inputLastName("DFG");
+      _checkoutStepOnePage.get().inputPostalCode("12345e");
+      _checkoutStepOnePage.get().clickContinue();
+      _checkoutStepTwoPage.set(new CheckoutStepTwoPage(getDriver()));
+      Assert.assertTrue(_checkoutStepTwoPage.get().isDisplayedOK());
    }
 
    @Test
    public void testCheckout02() {
-      checkoutStepOnePage = new CheckoutStepOnePage(driver);
-      checkoutStepOnePage.inputFirstName("ABC");
-      checkoutStepOnePage.inputLastName("DFG");
-      checkoutStepOnePage.clickContinue();
-      Assert.assertEquals(checkoutStepOnePage.getErrorCheckout(), "Error: Postal Code is required");
+      _checkoutStepOnePage.set(new CheckoutStepOnePage(getDriver()));
+      _checkoutStepOnePage.get().inputFirstName("ABC");
+      _checkoutStepOnePage.get().inputLastName("DFG");
+      _checkoutStepOnePage.get().clickContinue();
+      Assert.assertEquals(_checkoutStepOnePage.get().getErrorCheckout(), "Error: Postal Code is required");
    }
       
    @Test
    public void testCheckout03() {
-      checkoutStepOnePage = new CheckoutStepOnePage(driver);
-      checkoutStepOnePage.inputFirstName("ABC");
-      checkoutStepOnePage.inputPostalCode("12345e");
-      checkoutStepOnePage.clickContinue();
-      Assert.assertEquals(checkoutStepOnePage.getErrorCheckout(), "Error: Last Name is required");
+      _checkoutStepOnePage.set(new CheckoutStepOnePage(getDriver()));
+      _checkoutStepOnePage.get().inputFirstName("ABC");
+      _checkoutStepOnePage.get().inputPostalCode("12345e");
+      _checkoutStepOnePage.get().clickContinue();
+      Assert.assertEquals(_checkoutStepOnePage.get().getErrorCheckout(), "Error: Last Name is required");
    }
       
    @Test
    public void testCheckout04() {
-      checkoutStepOnePage = new CheckoutStepOnePage(driver);
-      checkoutStepOnePage.inputLastName("DFG");
-      checkoutStepOnePage.inputPostalCode("12345e");
-      checkoutStepOnePage.clickContinue();
-      Assert.assertEquals(checkoutStepOnePage.getErrorCheckout(), "Error: First Name is required");
+      _checkoutStepOnePage.set(new CheckoutStepOnePage(getDriver()));
+      _checkoutStepOnePage.get().inputLastName("DFG");
+      _checkoutStepOnePage.get().inputPostalCode("12345e");
+      _checkoutStepOnePage.get().clickContinue();
+      Assert.assertEquals(_checkoutStepOnePage.get().getErrorCheckout(), "Error: First Name is required");
    }
    
    @AfterMethod
-   public void AfterMethod(){
-      driver.close();
+   public void afterMethod(){
+      _checkoutStepOnePage.remove();
+      _checkoutStepTwoPage.remove();
    }
  }

@@ -3,7 +3,6 @@ package com.maupham.demo.tests;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 import java.util.stream.Collectors;
 
 import org.testng.Assert;
@@ -11,7 +10,6 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import com.maupham.demo.pages.CartItem;
 import com.maupham.demo.pages.CartPage;
 import com.maupham.demo.pages.InventoryItemPage;
 import com.maupham.demo.pages.InventoryPage;
@@ -19,20 +17,19 @@ import com.maupham.demo.pages.ProductItem;
 
 
 public class InventoryTest extends BaseTest {
-    private CartPage cartPage;
-   
-    private final ThreadLocal<InventoryPage> _inventoryPage = new ThreadLocal<>();
+    private final ThreadLocal<CartPage> _cartPage = new ThreadLocal<>();
+    private final ThreadLocal<InventoryPage> _inventoryPage = new ThreadLocal<>();// Sử dụng ThreadLocal để đảm bảo mỗi luồng có một thể hiện InventoryPage riêng
 
     @BeforeMethod 
-    public void BeforeMethod() {
+    public void beforeMethod() {
         login(); //Đăng nhập vào ứng dụng
         _inventoryPage .set(new InventoryPage(getDriver())); // Khởi tạo đối tượng InventoryPage
     } 
 
     @Test
-    public void Test_Addtcart() {
+    public void testAddToCart() {
         var inventoryPage = _inventoryPage.get();
-        List<ProductItem> productItems = inventoryPage.getProductItems(); //Lấy danh sách sản phẩm hiện có trên trang
+        var productItems = inventoryPage.getProductItems(); //Lấy danh sách sản phẩm hiện có trên trang
         int expectcount = 0; //Kiểm tra và xác minh số lượng sản phẩm trong giỏ hàng ban đầu là 0
         Assert.assertEquals(inventoryPage.getCartCount(),expectcount);
 
@@ -52,23 +49,23 @@ public class InventoryTest extends BaseTest {
     }
 
     @Test
-    public void test_ClickProductItem() {
+    public void testClickProductItem() {
         var inventoryPage = _inventoryPage.get();
-         List<ProductItem> productItems = inventoryPage.getProductItems();
+        var productItems = inventoryPage.getProductItems();
        
         for (ProductItem productItem : productItems) {
-            String expecttedImage = productItem.getImage();
-            String expecttedName = productItem.getName();
-            Double expecttedPrice = productItem.getPrice();
-            String expecttedDescription= productItem.getDescription();
+            var expecttedImage = productItem.getImage();
+            var expecttedName = productItem.getName();
+            var expecttedPrice = productItem.getPrice();
+            var expecttedDescription= productItem.getDescription();
            
             productItem.clickName();
-            InventoryItemPage inventoryItemPage = new InventoryItemPage(getDriver());
+            var inventoryItemPage = new InventoryItemPage(getDriver());
 
-            String actualImage = inventoryItemPage.getImage();
-            String actualName = inventoryItemPage.getName();
-            Double actualPrice = inventoryItemPage.getPrice();
-            String actualDescription = inventoryItemPage.getDescription();
+            var actualImage = inventoryItemPage.getImage();
+            var actualName = inventoryItemPage.getName();
+            var actualPrice = inventoryItemPage.getPrice();
+            var actualDescription = inventoryItemPage.getDescription();
 
             Assert.assertEquals(actualImage,expecttedImage);
             Assert.assertEquals(actualName,expecttedName);
@@ -80,43 +77,43 @@ public class InventoryTest extends BaseTest {
     }
 
     @Test
-    public void test_ClickAddtocartdBtn_CartItem() {
+    public void testClickAddToCartButtonCartItem() {
         var inventoryPage = _inventoryPage.get();
-        List<ProductItem> productItems = inventoryPage.getProductItems();  //Lấy danh sách các sản phẩm từ trang inventoryPage thông qua phương thức getProductItems().
+        var productItems = inventoryPage.getProductItems();  //Lấy danh sách các sản phẩm từ trang inventoryPage thông qua phương thức getProductItems().
         for (int i = 0; i < productItems.size(); i++) {
-            ProductItem productItem = productItems.get(i);
-            String expectedName = productItem.getName();
-            Double expectedPrice = productItem.getPrice();
-            String expectedDescription = productItem.getDescription();
+            var productItem = productItems.get(i);
+            var expectedName = productItem.getName();
+            var expectedPrice = productItem.getPrice();
+            var expectedDescription = productItem.getDescription();
 
             productItem.clickAddToCartButton(); //add gio hang
             inventoryPage.clickCartIcon(); //click vao gio hang để kt
 
-            cartPage = new CartPage(getDriver());
-            List<CartItem> cartItems = cartPage.getCartItems();
-            CartItem cartItem = cartItems.get(i);
+            _cartPage.set(new CartPage(getDriver()));
+            var cartItems = _cartPage.get().getCartItems();
+            var cartItem = cartItems.get(i);
 
-            String actualName = cartItem.getName();
-            Double actualPrice = cartItem.getPrice();
-            String actualDescription = cartItem.getDescription();
+            var actualName = cartItem.getName();
+            var actualPrice = cartItem.getPrice();
+            var actualDescription = cartItem.getDescription();
             
             Assert.assertEquals(actualName, expectedName);
             Assert.assertEquals(actualDescription, expectedDescription);
             Assert.assertEquals(actualPrice, expectedPrice);
            
-            cartPage.clickContinueShoppingButton();
+            _cartPage.get().clickContinueShoppingButton();
         }
     }
 
     @Test
     public void testSortProductsByPriceLowToHigh() {
         var inventoryPage = _inventoryPage.get();
-        List<ProductItem> productItems = inventoryPage.getProductItems(); //lấy danh sách sp ban đầu
+        var productItems = inventoryPage.getProductItems(); //lấy danh sách sp ban đầu
         
-        List<Double> expected = new ArrayList<>(productItems.stream().map(ProductItem::getPrice).collect(Collectors.toList())); // Tạo danh sách expected chứa giá của sản phẩm ban dau,ánh xạ (map) từng sản phẩm sang giá của nó,chuyển kết quả stream thành danh sách (tolist).
+        var expected = new ArrayList<>(productItems.stream().map(ProductItem::getPrice).collect(Collectors.toList())); // Tạo danh sách expected chứa giá của sản phẩm ban dau,ánh xạ (map) từng sản phẩm sang giá của nó,chuyển kết quả stream thành danh sách (tolist).
 
         inventoryPage.sortProductByPrice_LowToHight(); //sắp xếp sản phẩm theo giá từ thấp đến cao.
-        List<Double> actual = productItems.stream().map(ProductItem::getPrice).collect(Collectors.toList()); // Lấy danh sách giá sau khi thực sắp xếp
+        var actual = productItems.stream().map(ProductItem::getPrice).collect(Collectors.toList()); // Lấy danh sách giá sau khi thực sắp xếp
 
         Assert.assertFalse(expected.equals(actual)); //Kiểm tra danh sách ban đầu và sau khi sắp xếp có khác nhau không(phai đảm bảo khác nhau)
 
@@ -127,11 +124,11 @@ public class InventoryTest extends BaseTest {
     @Test
     public void testSortProductsByPriceHighToLow() {
         var inventoryPage = _inventoryPage.get();
-        List<ProductItem> productItems = inventoryPage.getProductItems(); 
-        List<Double> expected = new ArrayList<>(productItems.stream().map(ProductItem::getPrice).collect(Collectors.toList())); // Tạo danh sách expected chứa giá của sản phẩm ban dau,ánh xạ (map) từng sản phẩm sang giá của nó,chuyển kết quả stream thành danh sách (tolist).
+        var productItems = inventoryPage.getProductItems(); 
+        var expected = new ArrayList<>(productItems.stream().map(ProductItem::getPrice).collect(Collectors.toList())); // Tạo danh sách expected chứa giá của sản phẩm ban dau,ánh xạ (map) từng sản phẩm sang giá của nó,chuyển kết quả stream thành danh sách (tolist).
 
         inventoryPage.sortProductByPrice_HightToLow(); //sắp xếp sản phẩm theo giá từ thấp đến cao.
-        List<Double> actual = productItems.stream().map(ProductItem::getPrice).collect(Collectors.toList()); // Lấy danh sách giá sau khi thực sắp xếp
+        var actual = productItems.stream().map(ProductItem::getPrice).collect(Collectors.toList()); // Lấy danh sách giá sau khi thực sắp xếp
        
         Assert.assertFalse(expected.equals(actual)); //Kiểm tra danh sách ban đầu và sau khi sắp xếp có khác nhau không(phai đảm bảo khác nhau)
       
@@ -143,11 +140,11 @@ public class InventoryTest extends BaseTest {
     @Test
     public void testSortProductsByNameAtoZ() {
         var inventoryPage = _inventoryPage.get();
-        List<ProductItem> productItems = inventoryPage.getProductItems();
-        List<String> expected = new ArrayList<>(productItems.stream().map(ProductItem::getName).collect(Collectors.toList())); 
+        var productItems = inventoryPage.getProductItems();
+        var expected = new ArrayList<>(productItems.stream().map(ProductItem::getName).collect(Collectors.toList())); 
 
         inventoryPage.sortProductByName_ZToA();                                                    
-        List<String> actual = productItems.stream().map(ProductItem::getName).collect(Collectors.toList());                  
+        var actual = productItems.stream().map(ProductItem::getName).collect(Collectors.toList());                  
 
         Assert.assertFalse(expected.equals(actual));                                                     
 
@@ -156,7 +153,7 @@ public class InventoryTest extends BaseTest {
     }
 
     @AfterMethod
-    public  void AfterMethod() {
+    public  void afterMethod() {
         _inventoryPage.remove();
     }
 }

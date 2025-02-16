@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 
 public class CartPage extends BasePage {
     private final By byCartItems = By.className("cart_item");
@@ -18,12 +17,12 @@ public class CartPage extends BasePage {
     }
 
     public List<CartItem> getCartItems() {
-        List<WebElement> elements = getElements(byCartItems);
+        var elements = getElements(byCartItems);
         if (elements.isEmpty()) {
             return new ArrayList<>();
         }
 
-        List<CartItem> cartItems =  new ArrayList<>();
+        var cartItems =  new ArrayList<CartItem>();
         for (int i = 0; i < elements.size(); i++) {
             CartItem cartItem = new CartItem(getDriver(), i);
             cartItems.add(cartItem);

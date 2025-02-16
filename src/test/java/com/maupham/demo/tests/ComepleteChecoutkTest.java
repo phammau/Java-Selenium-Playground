@@ -1,6 +1,5 @@
 package com.maupham.demo.tests;
 
-import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -10,29 +9,27 @@ import com.maupham.demo.pages.CheckoutComplete;
 import com.maupham.demo.pages.CheckoutStepTwoPage;
 
 public class ComepleteChecoutkTest extends BaseTest {
-    private WebDriver driver;
-    private CheckoutStepTwoPage checkoutStepTwoPage;
-    private CheckoutComplete checkoutComplete;
 
-    public ComepleteChecoutkTest() {}
+    private final ThreadLocal<CheckoutStepTwoPage> _checkoutStepTwoPage = new ThreadLocal<>();
+    private final ThreadLocal<CheckoutComplete> _checkoutComplete = new ThreadLocal<>();
 
     @BeforeMethod
-    public void BeforeMethod() {
-        driver = setUpDriver();
-        loginAndGoToCheckoutStepTwoPage(driver);
-        checkoutStepTwoPage = new CheckoutStepTwoPage(driver);
+    public void beforeMethod() {
+        loginAndGoToCheckoutStepTwoPage();
+        _checkoutStepTwoPage.set(new CheckoutStepTwoPage(getDriver()));
     }
 
     @Test
     public void testComplete() {
-        checkoutStepTwoPage.clickFinishButton();
-        checkoutComplete = new CheckoutComplete(driver);
-        Assert.assertTrue(checkoutComplete.isDisplayOk());
+        _checkoutStepTwoPage.get().clickFinishButton();
+        _checkoutComplete.set(new CheckoutComplete(getDriver()));
+        Assert.assertTrue(_checkoutComplete.get().isDisplayOk());
     }
 
     @AfterMethod
-    public void AfterMethod() {
-        driver.close();
+    public void afterMethod() {
+        _checkoutStepTwoPage.remove();
+        _checkoutComplete.remove();
     }
 
 

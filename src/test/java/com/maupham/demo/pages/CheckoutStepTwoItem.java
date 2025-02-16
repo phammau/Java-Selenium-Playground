@@ -21,7 +21,7 @@ public class CheckoutStepTwoItem extends CheckoutStepTwoPage {
     }
     
     public Double getPrice() {
-        Double price = Double.valueOf(getText(byPrice).substring(1));
+        var price = Double.valueOf(getText(byPrice).replace("$", ""));
         return price;
     }
 

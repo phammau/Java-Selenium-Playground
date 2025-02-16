@@ -20,7 +20,7 @@ public class BaseTest {
     private final String CORRECT_PASSWORD = "secret_sauce";
     private final String INPUTFIRSTNAME = "ABC";
     private final String INPUTLASTNAME = "DFG";
-   // private final String INPUTPOSTALCODE = "12345e";
+    private final String INPUTPOSTALCODE = "12345e";
 
 
     private final ThreadLocal<WebDriver> _driver = new ThreadLocal<>();
@@ -58,25 +58,24 @@ public class BaseTest {
         loginPage.login(CORRECT_USERNAME, CORRECT_PASSWORD);
     }
 
-    protected void loginAndGoToCheckoutStepOnePage(WebDriver driver){
+    protected void loginAndGoToCheckoutStepOnePage(){
         login();
-
-        InventoryPage inventoryPage = new InventoryPage(driver);
+        var inventoryPage = new InventoryPage(getDriver());
         inventoryPage.clickCartIcon();
 
-        CartPage cartPage = new CartPage(driver);
+        var cartPage = new CartPage(getDriver());
         cartPage.clickCheckoutButton();
     }
 
-    protected void loginAndGoToCheckoutStepTwoPage(WebDriver driver){
+    protected void loginAndGoToCheckoutStepTwoPage(){
         login();
-        InventoryPage inventoryPage = new InventoryPage(driver);
+        var inventoryPage = new InventoryPage(getDriver());
         inventoryPage.clickCartIcon();
 
-        CartPage cartPage = new CartPage(driver);
+        var cartPage = new CartPage(getDriver());
         cartPage.clickCheckoutButton();
 
-       CheckoutStepOnePage checkoutStepOnePage = new CheckoutStepOnePage(driver);
-       checkoutStepOnePage.autoFillAndProceedToStepTwo(INPUTFIRSTNAME, INPUTLASTNAME, INPUTLASTNAME);
+       var checkoutStepOnePage = new CheckoutStepOnePage(getDriver());
+       checkoutStepOnePage.autoFillAndProceedToStepTwo(INPUTFIRSTNAME, INPUTLASTNAME, INPUTPOSTALCODE);
     }
 }

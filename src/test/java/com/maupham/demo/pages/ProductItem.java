@@ -40,7 +40,7 @@ public class ProductItem extends InventoryPage{
     }
 
     public Double getPrice() {
-        Double price = Double.valueOf(getText(byPrice).substring(1));
+        var  price = Double.valueOf(getText(byPrice).substring(1));
         return price;
     }
  
