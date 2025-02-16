@@ -11,7 +11,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class DriverHelper {
     
-    public static WebDriver getDriver(boolean headless) {
+    private static WebDriver getDriver(boolean headless) {
         WebDriverManager.chromedriver().setup();
         
         var path = System.getProperty("user.dir");

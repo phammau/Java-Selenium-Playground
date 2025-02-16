@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 import com.maupham.demo.pages.CheckoutComplete;
 import com.maupham.demo.pages.CheckoutStepTwoPage;
 
-public class ComepleteChecoutkTest extends BaseTest {
+public class ComepleteCheckoutTest extends BaseTest {
 
     private final ThreadLocal<CheckoutStepTwoPage> _checkoutStepTwoPage = new ThreadLocal<>();
     private final ThreadLocal<CheckoutComplete> _checkoutComplete = new ThreadLocal<>();

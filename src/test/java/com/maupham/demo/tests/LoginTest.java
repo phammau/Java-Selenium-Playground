@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 import com.maupham.demo.pages.InventoryPage;
 import com.maupham.demo.pages.LoginPage;
 
-public class LoginTest extends BaseTest{
+public class LoginTest extends BaseTest {
     private final ThreadLocal<LoginPage> _loginPage = new ThreadLocal<>();
 
     @BeforeMethod

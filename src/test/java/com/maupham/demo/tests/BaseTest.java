@@ -22,7 +22,6 @@ public class BaseTest {
     private final String INPUTLASTNAME = "DFG";
     private final String INPUTPOSTALCODE = "12345e";
 
-
     private final ThreadLocal<WebDriver> _driver = new ThreadLocal<>();
     public BaseTest() { }
 
@@ -45,10 +44,11 @@ public class BaseTest {
 
     protected WebDriver setUpDriver() {
         WebDriverManager.chromedriver().setup();
-        ChromeOptions options = new ChromeOptions();// Khởi tạo tùy chọn trình duyệt
+        var options = new ChromeOptions();// Khởi tạo tùy chọn trình duyệt
         options.addArguments("--start-maximized");// Mở trình duyệt với cửa sổ tối đa
+        options.addArguments("--headless");
         
-        WebDriver driver = new ChromeDriver(options); // Khởi tạo WebDriver với ChromeOptions
+        var driver = new ChromeDriver(options); // Khởi tạo WebDriver với ChromeOptions
         driver.get(BASE_URL);// Điều hướng đến trang web
         return driver;
     }

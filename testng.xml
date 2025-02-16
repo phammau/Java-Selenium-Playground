@@ -3,7 +3,7 @@
         <classes>
             <class name="com.maupham.demo.tests.LoginTest"/>
             <class name="com.maupham.demo.tests.InventoryTest"/>
-            <class name="com.maupham.demo.tests.ComepleteChecoutkTest"/>
+            <class name="com.maupham.demo.tests.ComepleteCheckoutTest"/>
             <class name="com.maupham.demo.tests.CheckoutStepOneTest"/>
             <class name="com.maupham.demo.tests.CheckoutStepTwoTest"/>
         </classes>
