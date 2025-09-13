@@ -14,10 +14,9 @@ public class ProductItem extends InventoryPage{
 
     public ProductItem(WebDriver driver, int index) {
         super(driver);
-
-        //Sử dụng index giúp bạn xác định vị trí cụ thể của các phần tử trong danh sách.
-        //tạo ra các XPath động, cho phép bạn truy cập các phần tử cụ thể dựa trên vị trí của chúng trong danh sách.
-        index++; // Tăng chỉ số lên 1 để phù hợp với chỉ mục của XPath (nhiếu phân tử)
+        //su dung index xac dinh vi tri cu the cac phan tu trong ds
+        //tao cac XPath dong
+        index++; // tang chi so len 1 de phu hop voi chi muc của XPath (nhieu phan tu)
 
         byImage = By.xpath("//div[@class='inventory_item'][" + index + "]//img[@class='inventory_item_img']");
         byName = By.xpath("//div[@class='inventory_item'][" + index + "]//div[@data-test='inventory-item-name']");

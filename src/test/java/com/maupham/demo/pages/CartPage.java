@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 public class CartPage extends BasePage {
     private final By byCartItems = By.className("cart_item");
@@ -39,7 +40,14 @@ public class CartPage extends BasePage {
     }
 
     public int getCartCount() {
-        String count = getElement(byCart).getText();
+        //su dung list an toan hon(su dung findElements thay vi findElement)
+        List<WebElement> badges = driver.findElements(byCart);
+        if (badges.isEmpty()) {
+            return 0;
+        }
+        // neu co lay text
+        String count = badges.get(0).getText();
+        // neu khong tra ve 0
         if (count.isEmpty()) {
             return 0;
         }

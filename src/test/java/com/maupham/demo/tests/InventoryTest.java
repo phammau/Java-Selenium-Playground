@@ -19,29 +19,29 @@ import com.maupham.demo.pages.ProductItem;
 
 public class InventoryTest extends BaseTest {
     private final ThreadLocal<CartPage> _cartPage = new ThreadLocal<>();
-    private final ThreadLocal<InventoryPage> _inventoryPage = new ThreadLocal<>();// Sử dụng ThreadLocal để đảm bảo mỗi luồng có một thể hiện InventoryPage riêng
+    private final ThreadLocal<InventoryPage> _inventoryPage = new ThreadLocal<>();// su dung ThreadLocal de dam bao moi luong co mot InventoryPage rieng
 
     @BeforeMethod 
     public void beforeMethod() {
-        login(); //Đăng nhập vào ứng dụng
-        _inventoryPage .set(new InventoryPage(getDriver())); // Khởi tạo đối tượng InventoryPage
+        login(); // dang nhap vao ung dung
+        _inventoryPage .set(new InventoryPage(getDriver())); // khoi tao doi tuong InventoryPage
     } 
 
     @Test
     public void testAddToCart() {
         var inventoryPage = _inventoryPage.get();
-        var productItems = inventoryPage.getProductItems(); //Lấy danh sách sản phẩm hiện có trên trang
-        var expectcount = 0; //Kiểm tra và xác minh số lượng sản phẩm trong giỏ hàng ban đầu là 0
+        var productItems = inventoryPage.getProductItems(); // lay ds hien co tren trang
+        var expectcount = 0; //kiem tra va xac minh so luong sp co trong gio hang la 0
         Assert.assertEquals(inventoryPage.getCartCount(),expectcount);
 
-        //Thêm từng sản phẩm vào giỏ hàng và kiểm tra số lượng cập nhật
+        //them tung sp vap gio hang va kiem tra so luong cap nhat
          for (var productItem : productItems){
             productItem.clickAddToCartButton();
             expectcount++;
             Assert.assertEquals(inventoryPage.getCartCount(),expectcount);
          }
 
-        //Xoa từng sản phẩm trong giỏ hàng và kiểm tra số lượng cập nhật
+        //xoa tung sp trong gio hang va kiem tra so luong cap nhat
         for (var productItem : productItems) {
             productItem.clickRemoveBtn();
             expectcount--;
@@ -82,7 +82,7 @@ public class InventoryTest extends BaseTest {
     @Test
     public void testClickAddToCartButtonCartItem() {
         var inventoryPage = _inventoryPage.get();
-        var productItems = inventoryPage.getProductItems();  //Lấy danh sách các sản phẩm từ trang inventoryPage thông qua phương thức getProductItems().
+        var productItems = inventoryPage.getProductItems();  //lay ds sp tu trang inventoryPage thong qua phuong thuc getProductItems().
         for (var i = 0; i < productItems.size(); i++) {
             var productItem = productItems.get(i);
             var expectedName = productItem.getName();
@@ -90,7 +90,7 @@ public class InventoryTest extends BaseTest {
             var expectedDescription = productItem.getDescription();
 
             productItem.clickAddToCartButton(); //add gio hang
-            inventoryPage.clickCartIcon(); //click vao gio hang để kt
+            inventoryPage.clickCartIcon(); //click vao gio hang de kt
 
             _cartPage.set(new CartPage(getDriver()));
             var cartItems = _cartPage.get().getCartItems();
@@ -112,16 +112,16 @@ public class InventoryTest extends BaseTest {
     public void testSortProductsByPriceLowToHigh() {
         var softAssert = new SoftAssert();
         var inventoryPage = _inventoryPage.get();
-        var productItems = inventoryPage.getProductItems(); //lấy danh sách sp ban đầu
+        var productItems = inventoryPage.getProductItems(); //lay ds sp ban dau
         
         var expected = new ArrayList<>(productItems.stream().map(ProductItem::getPrice).collect(Collectors.toList())); // Tạo danh sách expected chứa giá của sản phẩm ban dau,ánh xạ (map) từng sản phẩm sang giá của nó,chuyển kết quả stream thành danh sách (tolist).
 
-        inventoryPage.sortProductByPrice_LowToHight(); //sắp xếp sản phẩm theo giá từ thấp đến cao.
-        var actual = productItems.stream().map(ProductItem::getPrice).collect(Collectors.toList()); // Lấy danh sách giá sau khi thực sắp xếp
+        inventoryPage.sortProductByPrice_LowToHight(); //sap xep sp tu thap den cao
+        var actual = productItems.stream().map(ProductItem::getPrice).collect(Collectors.toList()); // lay ds sau khi sap xep
 
-        softAssert.assertFalse(expected.equals(actual)); //Kiểm tra danh sách ban đầu và sau khi sắp xếp có khác nhau không(phai đảm bảo khác nhau)
+        softAssert.assertFalse(expected.equals(actual)); //kiem tra ds ban dau va sau khi sap xep co khac nhau hay khong(phai dam bao khac nhau)
 
-        Collections.sort(expected); //Sắp xếp danh sách mong đợi (expected) để làm chuẩn                                                               
+        Collections.sort(expected); //sap xep ds mong doi (expected) de lam chuan                                                            
         softAssert.assertTrue(expected.equals(actual));
         softAssert.assertAll();
     }
@@ -132,12 +132,12 @@ public class InventoryTest extends BaseTest {
         var productItems = inventoryPage.getProductItems(); 
         var expected = new ArrayList<>(productItems.stream().map(ProductItem::getPrice).collect(Collectors.toList())); // Tạo danh sách expected chứa giá của sản phẩm ban dau,ánh xạ (map) từng sản phẩm sang giá của nó,chuyển kết quả stream thành danh sách (tolist).
 
-        inventoryPage.sortProductByPrice_HightToLow(); //sắp xếp sản phẩm theo giá từ thấp đến cao.
-        var actual = productItems.stream().map(ProductItem::getPrice).collect(Collectors.toList()); // Lấy danh sách giá sau khi thực sắp xếp
+        inventoryPage.sortProductByPrice_HightToLow(); //sap xep tu thap den cao
+        var actual = productItems.stream().map(ProductItem::getPrice).collect(Collectors.toList()); 
        
-        Assert.assertFalse(expected.equals(actual)); //Kiểm tra danh sách ban đầu và sau khi sắp xếp có khác nhau không(phai đảm bảo khác nhau)
+        Assert.assertFalse(expected.equals(actual)); 
       
-        Collections.sort(expected,Comparator.reverseOrder()); //Sắp xếp danh sách mong đợi (expected) để làm chuẩn                                                               
+        Collections.sort(expected,Comparator.reverseOrder());                                                           
         
         Assert.assertTrue(expected.equals(actual));
     }
@@ -153,7 +153,7 @@ public class InventoryTest extends BaseTest {
 
         Assert.assertFalse(expected.equals(actual));                                                     
 
-        Collections.sort(expected, Comparator.reverseOrder());  //sap xếp giảm trong Collections                                                              
+        Collections.sort(expected, Comparator.reverseOrder());  //sap xep giam trong Collections                                                              
         Assert.assertTrue(expected.equals(actual));
     }
 

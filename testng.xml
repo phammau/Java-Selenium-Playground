@@ -6,6 +6,7 @@
             <class name="com.maupham.demo.tests.ComepleteCheckoutTest"/>
             <class name="com.maupham.demo.tests.CheckoutStepOneTest"/>
             <class name="com.maupham.demo.tests.CheckoutStepTwoTest"/>
+            <class name="com.maupham.demo.tests.CartTest"/>
         </classes>
     </test>
 </suite>

@@ -13,7 +13,7 @@ public class LoginTest extends BaseTest {
 
     @BeforeMethod
     public void beforeMethod() {
-        _loginPage.set(new LoginPage(getDriver()));//khởi tao đối tuong loginpage với 1 webdriver  và gán nó cho luồng _loginPage
+        _loginPage.set(new LoginPage(getDriver()));//khoi tao doi tuong loginpage voi 1 webdriver va gan no cho luong _loginPage
     }
 
     @Test

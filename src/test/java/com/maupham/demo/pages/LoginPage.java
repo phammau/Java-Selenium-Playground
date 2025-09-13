@@ -4,18 +4,18 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 public class LoginPage extends BasePage{
-
+    
     public LoginPage(WebDriver driver){
         super(driver);
     }
 
-    //locators(UI elements) xác dịnh các phân tu trong giao diẹn
+    //locators(UI elements) xac dinh phan tu trong giao dien
     private final By ByUsernameinput =  By.id("user-name");
     private final By ByPasswordinput = By.id("password");
     private final By ByLoginbutton  = By.id("login-button");
     private final By ByErrorMessage = By.xpath("//h3[@data-test='error' and contains(text(),'Epic sadface: Username and password do not match any user in this service')]");
 
-    //action (menthod)//hành động
+    //action
     public void nhapUsername(String username) {
         inputText(ByUsernameinput, username);
     }

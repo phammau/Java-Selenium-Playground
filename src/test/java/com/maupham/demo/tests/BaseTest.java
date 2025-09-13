@@ -13,7 +13,7 @@ import com.maupham.demo.pages.LoginPage;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
-//chuẩn bị và thiết lập môi trường
+//chuan bi va thiet lap moi truong
 public class BaseTest {
     private final String BASE_URL = "https://www.saucedemo.com/";
     private final String CORRECT_USERNAME = "standard_user";
@@ -44,12 +44,23 @@ public class BaseTest {
 
     protected WebDriver setUpDriver() {
         WebDriverManager.chromedriver().setup();
-        var options = new ChromeOptions();// Khởi tạo tùy chọn trình duyệt
-        options.addArguments("--start-maximized");// Mở trình duyệt với cửa sổ tối đa
-        options.addArguments("--headless");
+        var options = new ChromeOptions();// khoi tao trinh duyet
+        options.addArguments("--start-maximized");// mo cua so toi da
+        //options.addArguments("--headless");
         
-        var driver = new ChromeDriver(options); // Khởi tạo WebDriver với ChromeOptions
-        driver.get(BASE_URL);// Điều hướng đến trang web
+        // tao profile tam de không laod du lieu trong Chrome
+        options.addArguments("--guest"); // run che do Guest
+        options.addArguments("--disable-notifications"); // tat notification
+        options.addArguments("--disable-save-password-bubble"); // tat pop-up luu mat khau
+
+        //tat canh bao luu mat khau
+        var prefs = new java.util.HashMap<String, Object>();
+        prefs.put("credentials_enable_service", false);
+        prefs.put("profile.password_manager_enabled", false);
+        options.setExperimentalOption("prefs", prefs);
+
+        var driver = new ChromeDriver(options); // khoi tao WebDriver voi ChromeOptions
+        driver.get(BASE_URL);// dieu huong den trang web
         return driver;
     }
 

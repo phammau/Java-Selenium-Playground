@@ -31,6 +31,4 @@ public class ComepleteCheckoutTest extends BaseTest {
         _checkoutStepTwoPage.remove();
         _checkoutComplete.remove();
     }
-
-
 }
